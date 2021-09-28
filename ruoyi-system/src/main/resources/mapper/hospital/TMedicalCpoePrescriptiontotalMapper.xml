@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hospital.mapper.TMedicalCpoePrescriptiontotalMapper">
+    
+    <resultMap type="TMedicalCpoePrescriptiontotal" id="TMedicalCpoePrescriptiontotalResult">
+        <result property="id"    column="id"    />
+        <result property="statue"    column="statue"    />
+        <result property="partid"    column="partId"    />
+        <result property="parttype"    column="partType"    />
+        <result property="partno"    column="partNo"    />
+        <result property="moretime"    column="moretime"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTMedicalCpoePrescriptiontotalVo">
+        select id, statue, partId, partType, partNo, moretime, remark from t_medical_cpoe_prescriptiontotal
+    </sql>
+
+    <select id="selectTMedicalCpoePrescriptiontotalList" parameterType="TMedicalCpoePrescriptiontotal" resultMap="TMedicalCpoePrescriptiontotalResult">
+        <include refid="selectTMedicalCpoePrescriptiontotalVo"/>
+        <where>  
+            <if test="statue != null "> and statue = #{statue}</if>
+            <if test="partid != null  and partid != ''"> and partId = #{partid}</if>
+            <if test="parttype != null  and parttype != ''"> and partType = #{parttype}</if>
+            <if test="partno != null  and partno != ''"> and partNo = #{partno}</if>
+            <if test="moretime != null "> and moretime = #{moretime}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalCpoePrescriptiontotalById" parameterType="String" resultMap="TMedicalCpoePrescriptiontotalResult">
+        <include refid="selectTMedicalCpoePrescriptiontotalVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTMedicalCpoePrescriptiontotal" parameterType="TMedicalCpoePrescriptiontotal">
+        insert into t_medical_cpoe_prescriptiontotal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="statue != null">statue,</if>
+            <if test="partid != null">partId,</if>
+            <if test="parttype != null">partType,</if>
+            <if test="partno != null">partNo,</if>
+            <if test="moretime != null">moretime,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="statue != null">#{statue},</if>
+            <if test="partid != null">#{partid},</if>
+            <if test="parttype != null">#{parttype},</if>
+            <if test="partno != null">#{partno},</if>
+            <if test="moretime != null">#{moretime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalCpoePrescriptiontotal" parameterType="TMedicalCpoePrescriptiontotal">
+        update t_medical_cpoe_prescriptiontotal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="statue != null">statue = #{statue},</if>
+            <if test="partid != null">partId = #{partid},</if>
+            <if test="parttype != null">partType = #{parttype},</if>
+            <if test="partno != null">partNo = #{partno},</if>
+            <if test="moretime != null">moretime = #{moretime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTMedicalCpoePrescriptiontotalById" parameterType="String">
+        delete from t_medical_cpoe_prescriptiontotal where id = #{id}
+    </delete>
+
+    <delete id="deleteTMedicalCpoePrescriptiontotalByIds" parameterType="String">
+        delete from t_medical_cpoe_prescriptiontotal where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

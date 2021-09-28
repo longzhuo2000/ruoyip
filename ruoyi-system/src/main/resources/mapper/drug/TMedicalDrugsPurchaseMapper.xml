@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.drug.mapper.TMedicalDrugsPurchaseMapper">
+    
+    <resultMap type="TMedicalDrugsPurchase" id="TMedicalDrugsPurchaseResult">
+        <result property="id"    column="id"    />
+        <result property="drugsid"    column="drugsId"    />
+        <result property="source"    column="source"    />
+        <result property="address"    column="address"    />
+        <result property="batchnumbe"    column="batchNumbe"    />
+        <result property="manufacturetime"    column="manufactureTime"    />
+        <result property="termofvalidity"    column="termOfValidity"    />
+        <result property="abstracts"    column="abstract"    />
+        <result property="filledby"    column="FilledBy"    />
+        <result property="verifier"    column="Verifier"    />
+        <result property="verificationtime"    column="VerificationTime"    />
+        <result property="reviewer"    column="Reviewer"    />
+        <result property="audittime"    column="AuditTime"    />
+        <result property="no"    column="no"    />
+    </resultMap>
+
+    <sql id="selectTMedicalDrugsPurchaseVo">
+        select id, drugsId, source, address, batchNumbe, manufactureTime, termOfValidity, abstract, FilledBy, Verifier, VerificationTime, Reviewer, AuditTime, no from t_medical_drugs_purchase
+    </sql>
+
+    <select id="selectTMedicalDrugsPurchaseList" parameterType="TMedicalDrugsPurchase" resultMap="TMedicalDrugsPurchaseResult">
+        <include refid="selectTMedicalDrugsPurchaseVo"/>
+        <where>  
+            <if test="drugsid != null  and drugsid != ''"> and drugsId = #{drugsid}</if>
+            <if test="source != null  and source != ''"> and source like concat('%', #{source}, '%')</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+            <if test="batchnumbe != null  and batchnumbe != ''"> and batchNumbe like concat('%', #{batchnumbe}, '%')</if>
+            <if test="manufacturetime != null "> and manufactureTime = #{manufacturetime}</if>
+            <if test="termofvalidity != null "> and termOfValidity = #{termofvalidity}</if>
+            <if test="abstracts != null  and abstracts != ''"> and abstract like concat('%', #{abstracts}, '%')</if>
+            <if test="filledby != null  and filledby != ''"> and FilledBy like concat('%', #{filledby}, '%')</if>
+            <if test="verifier != null  and verifier != ''"> and Verifier like concat('%', #{verifier}, '%')</if>
+            <if test="verificationtime != null "> and VerificationTime = #{verificationtime}</if>
+            <if test="reviewer != null  and reviewer != ''"> and Reviewer like concat('%', #{reviewer}, '%')</if>
+            <if test="audittime != null "> and AuditTime = #{audittime}</if>
+            <if test="no != null "> and no = #{no}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalDrugsPurchaseById" parameterType="String" resultMap="TMedicalDrugsPurchaseResult">
+        <include refid="selectTMedicalDrugsPurchaseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTMedicalDrugsPurchase" parameterType="TMedicalDrugsPurchase">
+        insert into t_medical_drugs_purchase
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="drugsid != null">drugsId,</if>
+            <if test="source != null and source != ''">source,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="batchnumbe != null and batchnumbe != ''">batchNumbe,</if>
+            <if test="manufacturetime != null">manufactureTime,</if>
+            <if test="termofvalidity != null">termOfValidity,</if>
+            <if test="abstracts != null">abstract,</if>
+            <if test="filledby != null and filledby != ''">FilledBy,</if>
+            <if test="verifier != null and verifier != ''">Verifier,</if>
+            <if test="verificationtime != null">VerificationTime,</if>
+            <if test="reviewer != null and reviewer != ''">Reviewer,</if>
+            <if test="audittime != null">AuditTime,</if>
+            <if test="no != null">no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="drugsid != null">#{drugsid},</if>
+            <if test="source != null and source != ''">#{source},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="batchnumbe != null and batchnumbe != ''">#{batchnumbe},</if>
+            <if test="manufacturetime != null">#{manufacturetime},</if>
+            <if test="termofvalidity != null">#{termofvalidity},</if>
+            <if test="abstracts != null">#{abstracts},</if>
+            <if test="filledby != null and filledby != ''">#{filledby},</if>
+            <if test="verifier != null and verifier != ''">#{verifier},</if>
+            <if test="verificationtime != null">#{verificationtime},</if>
+            <if test="reviewer != null and reviewer != ''">#{reviewer},</if>
+            <if test="audittime != null">#{audittime},</if>
+            <if test="no != null">#{no},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalDrugsPurchase" parameterType="TMedicalDrugsPurchase">
+        update t_medical_drugs_purchase
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="drugsid != null">drugsId = #{drugsid},</if>
+            <if test="source != null and source != ''">source = #{source},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="batchnumbe != null and batchnumbe != ''">batchNumbe = #{batchnumbe},</if>
+            <if test="manufacturetime != null">manufactureTime = #{manufacturetime},</if>
+            <if test="termofvalidity != null">termOfValidity = #{termofvalidity},</if>
+            <if test="abstracts != null">abstract = #{abstracts},</if>
+            <if test="filledby != null and filledby != ''">FilledBy = #{filledby},</if>
+            <if test="verifier != null and verifier != ''">Verifier = #{verifier},</if>
+            <if test="verificationtime != null">VerificationTime = #{verificationtime},</if>
+            <if test="reviewer != null and reviewer != ''">Reviewer = #{reviewer},</if>
+            <if test="audittime != null">AuditTime = #{audittime},</if>
+            <if test="no != null">no = #{no},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTMedicalDrugsPurchaseById" parameterType="String">
+        delete from t_medical_drugs_purchase where id = #{id}
+    </delete>
+
+    <delete id="deleteTMedicalDrugsPurchaseByIds" parameterType="String">
+        delete from t_medical_drugs_purchase where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

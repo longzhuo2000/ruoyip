@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hospital.mapper.TMedicalCpoePrescriptionMapper">
+    
+    <resultMap type="TMedicalCpoePrescription" id="TMedicalCpoePrescriptionResult">
+        <result property="id"    column="id"    />
+        <result property="prescriptiontotalid"    column="prescriptionTotalId"    />
+        <result property="doctorsorderid"    column="doctorsOrderId"    />
+        <result property="partid"    column="partId"    />
+        <result property="partno"    column="partNo"    />
+        <result property="moretime"    column="moretime"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTMedicalCpoePrescriptionVo">
+        select id, prescriptionTotalId, doctorsOrderId, partId, partNo, moretime, remark from t_medical_cpoe_prescription
+    </sql>
+
+    <select id="selectTMedicalCpoePrescriptionList" parameterType="TMedicalCpoePrescription" resultMap="TMedicalCpoePrescriptionResult">
+        <include refid="selectTMedicalCpoePrescriptionVo"/>
+        <where>  
+            <if test="prescriptiontotalid != null  and prescriptiontotalid != ''"> and prescriptionTotalId = #{prescriptiontotalid}</if>
+            <if test="doctorsorderid != null  and doctorsorderid != ''"> and doctorsOrderId = #{doctorsorderid}</if>
+            <if test="partid != null  and partid != ''"> and partId = #{partid}</if>
+            <if test="partno != null  and partno != ''"> and partNo = #{partno}</if>
+            <if test="moretime != null "> and moretime = #{moretime}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalCpoePrescriptionById" parameterType="String" resultMap="TMedicalCpoePrescriptionResult">
+        <include refid="selectTMedicalCpoePrescriptionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTMedicalCpoePrescription" parameterType="TMedicalCpoePrescription">
+        insert into t_medical_cpoe_prescription
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="prescriptiontotalid != null">prescriptionTotalId,</if>
+            <if test="doctorsorderid != null">doctorsOrderId,</if>
+            <if test="partid != null">partId,</if>
+            <if test="partno != null">partNo,</if>
+            <if test="moretime != null">moretime,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="prescriptiontotalid != null">#{prescriptiontotalid},</if>
+            <if test="doctorsorderid != null">#{doctorsorderid},</if>
+            <if test="partid != null">#{partid},</if>
+            <if test="partno != null">#{partno},</if>
+            <if test="moretime != null">#{moretime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalCpoePrescription" parameterType="TMedicalCpoePrescription">
+        update t_medical_cpoe_prescription
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="prescriptiontotalid != null">prescriptionTotalId = #{prescriptiontotalid},</if>
+            <if test="doctorsorderid != null">doctorsOrderId = #{doctorsorderid},</if>
+            <if test="partid != null">partId = #{partid},</if>
+            <if test="partno != null">partNo = #{partno},</if>
+            <if test="moretime != null">moretime = #{moretime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTMedicalCpoePrescriptionById" parameterType="String">
+        delete from t_medical_cpoe_prescription where id = #{id}
+    </delete>
+
+    <delete id="deleteTMedicalCpoePrescriptionByIds" parameterType="String">
+        delete from t_medical_cpoe_prescription where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

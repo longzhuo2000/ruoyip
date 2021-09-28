@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hospital.mapper.TMedicalCpoeDoctorsorderhandleMapper">
+    
+    <resultMap type="TMedicalCpoeDoctorsorderhandle" id="TMedicalCpoeDoctorsorderhandleResult">
+        <result property="id"    column="id"    />
+        <result property="userid"    column="userId"    />
+        <result property="doctorsorderid"    column="doctorsOrderId"    />
+        <result property="moretime"    column="moretime"    />
+        <result property="result"    column="result"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTMedicalCpoeDoctorsorderhandleVo">
+        select id, userId, doctorsOrderId, moretime, result, remark from t_medical_cpoe_doctorsorderhandle
+    </sql>
+
+    <select id="selectTMedicalCpoeDoctorsorderhandleList" parameterType="TMedicalCpoeDoctorsorderhandle" resultMap="TMedicalCpoeDoctorsorderhandleResult">
+        <include refid="selectTMedicalCpoeDoctorsorderhandleVo"/>
+        <where>  
+            <if test="userid != null  and userid != ''"> and userId = #{userid}</if>
+            <if test="doctorsorderid != null  and doctorsorderid != ''"> and doctorsOrderId = #{doctorsorderid}</if>
+            <if test="moretime != null "> and moretime = #{moretime}</if>
+            <if test="result != null "> and result = #{result}</if>
+        </where>
+    </select>
+    
+    <select id="selectTMedicalCpoeDoctorsorderhandleById" parameterType="String" resultMap="TMedicalCpoeDoctorsorderhandleResult">
+        <include refid="selectTMedicalCpoeDoctorsorderhandleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTMedicalCpoeDoctorsorderhandle" parameterType="TMedicalCpoeDoctorsorderhandle">
+        insert into t_medical_cpoe_doctorsorderhandle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userid != null">userId,</if>
+            <if test="doctorsorderid != null">doctorsOrderId,</if>
+            <if test="moretime != null">moretime,</if>
+            <if test="result != null">result,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="doctorsorderid != null">#{doctorsorderid},</if>
+            <if test="moretime != null">#{moretime},</if>
+            <if test="result != null">#{result},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTMedicalCpoeDoctorsorderhandle" parameterType="TMedicalCpoeDoctorsorderhandle">
+        update t_medical_cpoe_doctorsorderhandle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null">userId = #{userid},</if>
+            <if test="doctorsorderid != null">doctorsOrderId = #{doctorsorderid},</if>
+            <if test="moretime != null">moretime = #{moretime},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTMedicalCpoeDoctorsorderhandleById" parameterType="String">
+        delete from t_medical_cpoe_doctorsorderhandle where id = #{id}
+    </delete>
+
+    <delete id="deleteTMedicalCpoeDoctorsorderhandleByIds" parameterType="String">
+        delete from t_medical_cpoe_doctorsorderhandle where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
